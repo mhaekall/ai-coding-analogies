@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamus Coding: Analogi Sederhana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'Azeret Mono', monospace;
+
+      /* Paper/Ink Aesthetic (Light Mode) */
+      --bg: #faf7f5;
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-bright: rgba(0, 0, 0, 0.15);
+      --text: #2d2a26;
+      --text-dim: #736d65;
+      
+      /* Terracotta & Sage */
+      --accent: #c2410c;
+      --accent-dim: rgba(194, 65, 12, 0.08);
+      --node-a: #c2410c;     /* Terracotta */
+      --node-a-dim: rgba(194, 65, 12, 0.08);
+      --node-b: #65a30d;     /* Sage Green */
+      --node-b-dim: rgba(101, 163, 13, 0.08);
+      --node-c: #0284c7;     /* Ocean Blue */
+      --node-c-dim: rgba(2, 132, 199, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1917;
+        --surface: #292524;
+        --surface-elevated: #332f2c;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-bright: rgba(255, 255, 255, 0.15);
+        --text: #f5f5f4;
+        --text-dim: #a8a29e;
+        
+        --accent: #ea580c;
+        --accent-dim: rgba(234, 88, 12, 0.15);
+        --node-a: #ea580c;
+        --node-a-dim: rgba(234, 88, 12, 0.15);
+        --node-b: #84cc16;
+        --node-b-dim: rgba(132, 204, 22, 0.15);
+        --node-c: #38bdf8;
+        --node-c-dim: rgba(56, 189, 248, 0.15);
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--text);
+      line-height: 1.6;
+      overflow-wrap: break-word;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeUp 0.6s ease-out both;
+      animation-delay: 0.1s;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0 0 16px 0;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .grid > * {
+      min-width: 0;
+    }
+
+    /* Card Components */
+    .ve-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeUp 0.6s ease-out both;
+      animation-delay: calc(var(--i, 0) * 0.1s + 0.2s);
+    }
+
+    .ve-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .ve-card--accent-a { border-top: 4px solid var(--node-a); }
+    .ve-card--accent-b { border-top: 4px solid var(--node-b); }
+    .ve-card--accent-c { border-top: 4px solid var(--node-c); }
+
+    .ve-card__label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .ve-card--accent-a .ve-card__label { color: var(--node-a); background: var(--node-a-dim); }
+    .ve-card--accent-b .ve-card__label { color: var(--node-b); background: var(--node-b-dim); }
+    .ve-card--accent-c .ve-card__label { color: var(--node-c); background: var(--node-c-dim); }
+
+    .ve-card__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.01em;
+    }
+
+    .ve-card__analogy {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .ve-card__analogy::before {
+      content: '→';
+      color: var(--text-dim);
+    }
+
+    .ve-card__desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    /* Hierarchy visual separator */
+    .hierarchy-divider {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 16px 0;
+      opacity: 0.6;
+      animation: fadeUp 0.6s ease-out both;
+      animation-delay: calc(var(--i, 0) * 0.1s + 0.2s);
+    }
+
+    .hierarchy-divider::before,
+    .hierarchy-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-bright);
+    }
+
+    .hierarchy-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 24px 16px; }
+      h1 { font-size: 2rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Kamus Coding: Analogi Sederhana</h1>
+      <p class="subtitle">Memahami istilah teknis di dunia pemrograman dari konsep paling umum hingga spesifik menggunakan perumpamaan sehari-hari yang mudah dicerna oleh siapa saja.</p>
+    </header>
+
+    <div class="grid">
+      <!-- General Concept -->
+      <div class="hierarchy-divider" style="--i: 0">
+        <span class="hierarchy-label">Konsep Dasar (General)</span>
+      </div>
+
+      <div class="ve-card ve-card--accent-a" style="--i: 1">
+        <div class="ve-card__label">Fundamental</div>
+        <h2 class="ve-card__title">Programming / Coding</h2>
+        <div class="ve-card__analogy">Menulis Resep Masakan</div>
+        <p class="ve-card__desc">Komputer itu seperti koki magang yang sangat penurut tapi tidak punya inisiatif. Kamu harus menuliskan langkah-langkah secara detail agar dia bisa memasak. Proses menulis instruksi inilah yang disebut coding.</p>
+      </div>
+
+      <div class="ve-card ve-card--accent-a" style="--i: 2">
+        <div class="ve-card__label">Logika Dasar</div>
+        <h2 class="ve-card__title">Algorithm</h2>
+        <div class="ve-card__analogy">Resep Rahasia Spesifik</div>
+        <p class="ve-card__desc">Ini adalah urutan langkah demi langkah untuk menyelesaikan masalah. Kalau kamu ubah urutan resepnya (misal: panggang dulu baru masukkan telur), kuenya pasti gagal. Algoritma adalah logika yang memastikan "resep" berjalan benar.</p>
+      </div>
+
+      <!-- Medium Level -->
+      <div class="hierarchy-divider" style="--i: 3">
+        <span class="hierarchy-label">Blok Bangunan Kode (Medium)</span>
+      </div>
+
+      <div class="ve-card ve-card--accent-b" style="--i: 4">
+        <div class="ve-card__label">Penyimpanan Data</div>
+        <h2 class="ve-card__title">Variables</h2>
+        <div class="ve-card__analogy">Toples Berlabel</div>
+        <p class="ve-card__desc">Bayangkan toples bertuliskan "Gula". Isinya bisa 2 sendok, bisa 5 sendok, dan isinya bisa diganti kapan saja. Di coding, variable adalah wadah untuk menyimpan data (seperti teks atau angka) yang nilainya bisa diubah-ubah.</p>
+      </div>
+
+      <div class="ve-card ve-card--accent-b" style="--i: 5">
+        <div class="ve-card__label">Instruksi Berulang</div>
+        <h2 class="ve-card__title">Functions / Methods</h2>
+        <div class="ve-card__analogy">Blender Kesayangan</div>
+        <p class="ve-card__desc">Kamu masukkan buah (Input), pencet tombol, dan keluar jus (Output). Kamu tidak perlu repot tahu bagaimana mesin di dalam bekerja, yang penting jusnya jadi! Fungsi adalah sekumpulan kode yang dibungkus agar bisa dipakai berulang kali.</p>
+      </div>
+
+      <div class="ve-card ve-card--accent-b" style="--i: 6">
+        <div class="ve-card__label">Logika Keputusan</div>
+        <h2 class="ve-card__title">If/Else (Conditionals)</h2>
+        <div class="ve-card__analogy">Persimpangan Jalan</div>
+        <p class="ve-card__desc">"Jika (If) di luar hujan, bawa payung. Kalau tidak (Else), pakai kacamata hitam." Ini adalah cara kita menyuruh komputer membuat keputusan secara otomatis berdasarkan kondisi tertentu yang terjadi saat itu juga.</p>
+      </div>
+
+      <div class="ve-card ve-card--accent-b" style="--i: 7">
+        <div class="ve-card__label">Otomatisasi</div>
+        <h2 class="ve-card__title">Loops (Perulangan)</h2>
+        <div class="ve-card__analogy">Mencuci Piring Kotor</div>
+        <p class="ve-card__desc">"Selama (While) masih ada piring kotor di wastafel, cuci piringnya." Daripada menyuruh komputer "cuci piring" 100 kali secara manual, kita gunakan Loop agar dia mengulang instruksi tersebut secara otomatis sampai tugasnya benar-benar selesai.</p>
+      </div>
+
+      <!-- Specific Concept -->
+      <div class="hierarchy-divider" style="--i: 8">
+        <span class="hierarchy-label">Arsitektur & Integrasi (Specific)</span>
+      </div>
+
+      <div class="ve-card ve-card--accent-c" style="--i: 9">
+        <div class="ve-card__label">Desain Sistem</div>
+        <h2 class="ve-card__title">Classes & Objects (OOP)</h2>
+        <div class="ve-card__analogy">Cetakan Kue dan Kuenya</div>
+        <p class="ve-card__desc">Class adalah cetakan kue bintang (Blueprint/Rancangan). Sedangkan Object adalah kue coklat berbentuk bintang yang baru saja keluar dari oven (Wujud aslinya). Kita bisa membuat ratusan object (kue) hanya dengan satu class (cetakan).</p>
+      </div>
+
+      <div class="ve-card ve-card--accent-c" style="--i: 10">
+        <div class="ve-card__label">Komunikasi Sistem</div>
+        <h2 class="ve-card__title">API</h2>
+        <div class="ve-card__analogy">Pelayan Restoran</div>
+        <p class="ve-card__desc">Kamu (Aplikasi A) melihat menu. Pelayan (API) mencatat pesananmu, membawanya ke dapur (Server/Sistem B), lalu mengantarkan makanannya kembali padamu. Kamu bisa dapat makanan tanpa perlu repot masuk ke dapur orang lain!</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

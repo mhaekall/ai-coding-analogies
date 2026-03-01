@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kalkulator Usia iOS</title>
+    <style>
+        :root {
+            --ios-bg: #f2f2f7;
+            --ios-blue: #007aff;
+            --ios-card: rgba(255, 255, 255, 0.7);
+            --ios-text: #000000;
+            --ios-secondary-text: #8e8e93;
+            --ios-separator: #c6c6c8;
+            --ios-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --ios-bg: #000000;
+                --ios-blue: #0a84ff;
+                --ios-card: rgba(28, 28, 30, 0.7);
+                --ios-text: #ffffff;
+                --ios-secondary-text: #98989d;
+                --ios-separator: #38383a;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--ios-bg);
+            color: var(--ios-text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .card {
+            background: var(--ios-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--ios-shadow);
+            margin-bottom: 20px;
+            border: 0.5px solid var(--ios-separator);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 13px;
+            text-transform: uppercase;
+            color: var(--ios-secondary-text);
+            padding-left: 4px;
+            font-weight: 500;
+        }
+
+        input[type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            border: none;
+            color: var(--ios-text);
+            font-size: 17px;
+            padding: 12px 4px;
+            width: 100%;
+            outline: none;
+            border-bottom: 0.5px solid var(--ios-separator);
+        }
+
+        button {
+            background-color: var(--ios-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+            opacity: 0.8;
+        }
+
+        .results {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 0.5px solid var(--ios-separator);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon {
+            font-size: 24px;
+            width: 32px;
+            text-align: center;
+        }
+
+        .result-val {
+            font-weight: 500;
+            font-size: 17px;
+        }
+
+        .big-age {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .big-age-num {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--ios-blue);
+            line-height: 1;
+        }
+
+        .big-age-label {
+            font-size: 17px;
+            color: var(--ios-secondary-text);
+            margin-top: 8px;
+        }
+
+        .shio-zodiac-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .mini-card {
+            background: var(--ios-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            border: 0.5px solid var(--ios-separator);
+        }
+
+        .mini-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .mini-title {
+            font-size: 12px;
+            color: var(--ios-secondary-text);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .mini-value {
+            font-size: 17px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* Float animation */
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Kalkulator Usia</h1>
+    
+    <div class="card">
+        <div class="input-group">
+            <label for="dob">Tanggal Lahir</label>
+            <input type="date" id="dob" required>
+        </div>
+        <button onclick="calculate()">Hitung Sekarang</button>
+    </div>
+
+    <div id="resultsArea" class="results">
+        <div class="card big-age">
+            <div class="big-age-num" id="resYears">--</div>
+            <div class="big-age-label">Tahun</div>
+            <div style="font-size: 15px; margin-top: 10px; color: var(--ios-secondary-text)" id="resDetail">
+                -- Bulan, -- Hari
+            </div>
+        </div>
+
+        <div class="shio-zodiac-grid">
+            <div class="mini-card">
+                <div class="mini-icon float" id="zodiacIcon">✨</div>
+                <div class="mini-title">Zodiak</div>
+                <div class="mini-value" id="resZodiac">--</div>
+            </div>
+            <div class="mini-card">
+                <div class="mini-icon float" id="shioIcon">🐉</div>
+                <div class="mini-title">Shio</div>
+                <div class="mini-value" id="resShio">--</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="result-item">
+                <div class="result-label">
+                    <span class="icon">🎂</span>
+                    <span>Ulang Tahun Berikutnya</span>
+                </div>
+                <div class="result-val" id="resNextBday">--</div>
+            </div>
+            <div class="result-item">
+                <div class="result-label">
+                    <span class="icon">⏳</span>
+                    <span>Total Hari Hidup</span>
+                </div>
+                <div class="result-val" id="resTotalDays">--</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const dobInput = document.getElementById('dob').value;
+        if (!dobInput) return;
+
+        const dob = new Date(dobInput);
+        const today = new Date();
+
+        // 1. Age Calculation
+        let years = today.getFullYear() - dob.getFullYear();
+        let months = today.getMonth() - dob.getMonth();
+        let days = today.getDate() - dob.getDate();
+
+        if (days < 0) {
+            months--;
+            const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+            days += lastMonth.getDate();
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        document.getElementById('resYears').innerText = years;
+        document.getElementById('resDetail').innerText = `${months} Bulan, ${days} Hari`;
+
+        // 2. Total Days
+        const diffTime = Math.abs(today - dob);
+        const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById('resTotalDays').innerText = totalDays.toLocaleString('id-ID');
+
+        // 3. Zodiac
+        const m = dob.getMonth() + 1;
+        const d = dob.getDate();
+        let zodiac = "";
+        let zIcon = "";
+
+        if ((m == 3 && d >= 21) || (m == 4 && d <= 19)) { zodiac = "Aries"; zIcon = "♈️"; }
+        else if ((m == 4 && d >= 20) || (m == 5 && d <= 20)) { zodiac = "Taurus"; zIcon = "♉️"; }
+        else if ((m == 5 && d >= 21) || (m == 6 && d <= 20)) { zodiac = "Gemini"; zIcon = "♊️"; }
+        else if ((m == 6 && d >= 21) || (m == 7 && d <= 22)) { zodiac = "Cancer"; zIcon = "♋️"; }
+        else if ((m == 7 && d >= 23) || (m == 8 && d <= 22)) { zodiac = "Leo"; zIcon = "♌️"; }
+        else if ((m == 8 && d >= 23) || (m == 9 && d <= 22)) { zodiac = "Virgo"; zIcon = "♍️"; }
+        else if ((m == 9 && d >= 23) || (m == 10 && d <= 22)) { zodiac = "Libra"; zIcon = "♎️"; }
+        else if ((m == 10 && d >= 23) || (m == 11 && d <= 21)) { zodiac = "Scorpio"; zIcon = "♏️"; }
+        else if ((m == 11 && d >= 22) || (m == 12 && d <= 21)) { zodiac = "Sagitarius"; zIcon = "♐️"; }
+        else if ((m == 12 && d >= 22) || (m == 1 && d <= 19)) { zodiac = "Capricorn"; zIcon = "♑️"; }
+        else if ((m == 1 && d >= 20) || (m == 2 && d <= 18)) { zodiac = "Aquarius"; zIcon = "♒️"; }
+        else { zodiac = "Pisces"; zIcon = "♓️"; }
+
+        document.getElementById('resZodiac').innerText = zodiac;
+        document.getElementById('zodiacIcon').innerText = zIcon;
+
+        // 4. Shio
+        const shios = ["Monyet", "Ayam", "Anjing", "Babi", "Tikus", "Kerbau", "Macan", "Kelinci", "Naga", "Ular", "Kuda", "Kambing"];
+        const shioIcons = ["🐒", "🐓", "🐕", "🐖", "🐀", "🐂", "🐅", "🐇", "🐉", "🐍", "🐎", "🐐"];
+        const shioIdx = dob.getFullYear() % 12;
+        document.getElementById('resShio').innerText = shios[shioIdx];
+        document.getElementById('shioIcon').innerText = shioIcons[shioIdx];
+
+        // 5. Next Birthday
+        let nextBday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+        if (nextBday < today) {
+            nextBday.setFullYear(today.getFullYear() + 1);
+        }
+        const bdayDiff = Math.ceil((nextBday - today) / (1000 * 60 * 60 * 24));
+        document.getElementById('resNextBday').innerText = bdayDiff === 365 ? "Hari ini! 🎂" : `${bdayDiff} hari lagi`;
+
+        // Show Results
+        const area = document.getElementById('resultsArea');
+        area.style.display = 'flex';
+        area.style.animation = 'fadeIn 0.8s ease-out';
+    }
+
+    // Set default max date to today
+    document.getElementById('dob').max = new Date().toISOString().split("T")[0];
+</script>
+
+</body>
+</html>

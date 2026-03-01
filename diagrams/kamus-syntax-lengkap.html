@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamus Besar Syntax JS/React</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      
+      /* Dark Theme (Default for coding feel) */
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-elevated: #21262d;
+      --border: rgba(255, 255, 255, 0.1);
+      --border-bright: rgba(255, 255, 255, 0.2);
+      --text: #e6edf3;
+      --text-dim: #8b949e;
+      
+      --accent: #58a6ff;
+      --accent-dim: rgba(88, 166, 255, 0.15);
+      
+      --color-logic: #d2a8ff; /* Purple */
+      --color-react: #3fb950; /* Green */
+      --color-data: #ff7b72;  /* Red/Orange */
+    }
+
+    body {
+      margin: 0; padding: 40px 20px;
+      font-family: var(--font-body);
+      background-color: var(--bg); color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    header { text-align: center; margin-bottom: 50px; }
+    h1 { font-size: 2.8rem; margin: 0 0 16px 0; color: #fff; }
+    .subtitle { font-size: 1.1rem; color: var(--text-dim); }
+
+    .category-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin: 40px 0 20px 0;
+    }
+
+    .grid {
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: transform 0.2s;
+    }
+    
+    .card:hover { border-color: var(--accent); }
+
+    .card-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+    .symbol { 
+      font-family: var(--font-mono); font-size: 1.5rem; font-weight: bold; 
+      background: var(--surface-elevated); padding: 4px 12px; border-radius: 8px;
+    }
+    .title { font-size: 1.3rem; font-weight: 600; margin: 0; }
+
+    .code-block {
+      background: #010409;
+      padding: 16px; border-radius: 8px; border: 1px solid var(--border);
+      font-family: var(--font-mono); font-size: 0.9rem;
+      margin: 16px 0; color: #c9d1d9;
+    }
+
+    .analogy {
+      background: var(--accent-dim);
+      border-left: 4px solid var(--accent);
+      padding: 16px; border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+    }
+    
+    .analogy b { color: #fff; }
+
+    /* Category Colors */
+    .logic .symbol { color: var(--color-logic); }
+    .logic .analogy { border-left-color: var(--color-logic); background: rgba(210, 168, 255, 0.1); }
+    
+    .react .symbol { color: var(--color-react); }
+    .react .analogy { border-left-color: var(--color-react); background: rgba(63, 185, 80, 0.1); }
+    
+    .data .symbol { color: var(--color-data); }
+    .data .analogy { border-left-color: var(--color-data); background: rgba(255, 123, 114, 0.1); }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Kamus Besar Syntax Alien 👽</h1>
+      <p class="subtitle">Panduan membaca simbol-simbol aneh (Syntax) di JavaScript, React, & Next.js yang sering di-generate oleh AI.</p>
+    </header>
+
+    <!-- KATEGORI 1: LOGIKA & SIMBOL PENDEK -->
+    <div class="category-title">1. Simbol Logika Singkat (Shortcut)</div>
+    <div class="grid">
+      
+      <div class="card logic">
+        <div class="card-header">
+          <div class="symbol">&&</div>
+          <h2 class="title">Tombol "Hanya Jika" (Logical AND)</h2>
+        </div>
+        <p>Daripada nulis aturan panjang <code>if (sedangLoading) { tampilkan_spinner }</code>, programmer menggunakan <code>&&</code> agar kode lebih pendek.</p>
+        <div class="code-block">
+          { isLoading && &lt;Spinner /&gt; }
+        </div>
+        <div class="analogy">
+          <b>Cara bacanya:</b> "JIKA <code>isLoading</code> itu benar (bernilai <i>true</i>), MAKA tolong tampilkan <code>&lt;Spinner /&gt;</code> di layar. Kalau salah, cuekin aja."
+        </div>
+      </div>
+
+      <div class="card logic">
+        <div class="card-header">
+          <div class="symbol">? :</div>
+          <h2 class="title">Persimpangan Jalan (Ternary Operator)</h2>
+        </div>
+        <p>Ini adalah bentuk sangat singkat dari If/Else. Menghemat 5 baris kode menjadi cuma 1 baris.</p>
+        <div class="code-block">
+          const warna = isError ? 'merah' : 'hijau';
+        </div>
+        <div class="analogy">
+          <b>Cara bacanya:</b> "Apakah <code>isError</code> terjadi <b>(?)</b> Kalau IYA, jadikan 'merah'. Kalau TIDAK <b>(:)</b> jadikan 'hijau'."
+        </div>
+      </div>
+
+      <div class="card logic">
+        <div class="card-header">
+          <div class="symbol">?.</div>
+          <h2 class="title">Pencegah Kiamat (Optional Chaining)</h2>
+        </div>
+        <p>Penyebab utama aplikasi <i>crash/blank putih</i> adalah mencoba membaca data yang ternyata isinya KOSONG. Tanda tanya sebelum titik ini mencegah hal itu.</p>
+        <div class="code-block">
+          const namaKota = user?.alamat?.kota;
+        </div>
+        <div class="analogy">
+          <b>Analogi Kotak Kosong:</b> "Coba buka data <code>user</code>. ADA isinya? Kalau ada, coba buka <code>alamat</code>. ADA? Kalau ada, ambil <code>kota</code>. Kalau di tengah jalan ternyata KOSONG, udah stop aja, jangan dipaksa ntar error."
+        </div>
+      </div>
+
+    </div>
+
+    <!-- KATEGORI 2: MENGOLAH DATA -->
+    <div class="category-title">2. Mengolah Data (Data Manipulation)</div>
+    <div class="grid">
+
+      <div class="card data">
+        <div class="card-header">
+          <div class="symbol">.map()</div>
+          <h2 class="title">Mesin Fotokopi (Array Map)</h2>
+        </div>
+        <p>Sangat sering dipakai untuk menampilkan daftar panjang (misal: list produk, history chat, daftar menu) tanpa harus mengetik HTML satu per satu.</p>
+        <div class="code-block">
+          {daftarMenu.map((item) => ( <br>
+          &nbsp;&nbsp;&lt;li&gt; {item.nama} &lt;/li&gt; <br>
+          ))}
+        </div>
+        <div class="analogy">
+          <b>Cara bacanya:</b> "Tolong ambil toples <code>daftarMenu</code>. Untuk setiap satu <code>item</code> di dalamnya, cetakkan sebuah elemen <code>&lt;li&gt;</code> ke layar." AI pakai ini agar jika menunya ada 100, dia nggak perlu ngetik HTML 100 kali.
+        </div>
+      </div>
+
+      <div class="card data">
+        <div class="card-header">
+          <div class="symbol">{ }</div>
+          <h2 class="title">Bongkar Kardus (Destructuring)</h2>
+        </div>
+        <p>Cara cepat mengeluarkan isi dari sebuah objek (kardus besar) tanpa harus menyebut nama kardusnya berkali-kali.</p>
+        <div class="code-block">
+          // Cara kuno:<br>
+          const nama = user.nama;<br>
+          const umur = user.umur;<br><br>
+          // Cara modern (Destructuring):<br>
+          const { nama, umur } = user;
+        </div>
+        <div class="analogy">
+          <b>Cara bacanya:</b> "Dari kardus besar bernama <code>user</code>, tolong langsung bongkar dan ambil barang bernama <code>nama</code> dan <code>umur</code> lalu taruh di meja."
+        </div>
+      </div>
+
+    </div>
+
+    <!-- KATEGORI 3: KEHIDUPAN REACT/NEXT.JS -->
+    <div class="category-title">3. Khusus React & Next.js (The Hooks)</div>
+    <div class="grid">
+
+      <div class="card react">
+        <div class="card-header">
+          <div class="symbol">useState</div>
+          <h2 class="title">Buku Catatan Sementara (State)</h2>
+        </div>
+        <p>Aplikasi butuh ingatan untuk merespon klik user (misal: mencatat angka jumlah like, mencatat teks yang sedang diketik user).</p>
+        <div class="code-block">
+          const [jumlah, setJumlah] = useState(0);
+        </div>
+        <div class="analogy">
+          <b>Cara bacanya:</b> "Buatkan satu catatan memori bernama <code>jumlah</code> dengan nilai awal <b>0</b>. Siapkan juga tombol saklar bernama <code>setJumlah</code>. Kalau nanti aku mau ubah angkanya, aku akan panggil tombol <code>setJumlah</code> ini."
+        </div>
+      </div>
+
+      <div class="card react">
+        <div class="card-header">
+          <div class="symbol">useEffect</div>
+          <h2 class="title">Alarm / Efek Samping</h2>
+        </div>
+        <p>Menyuruh aplikasi melakukan sesuatu SECARA OTOMATIS saat halaman baru dibuka, atau saat ada data yang berubah.</p>
+        <div class="code-block">
+          useEffect(() => {<br>
+          &nbsp;&nbsp;fetchDataDariDatabase();<br>
+          }, []);
+        </div>
+        <div class="analogy">
+          <b>Cara bacanya:</b> "Tolong pasang alarm! Begitu halaman web ini selesai di-load di layar HP pengguna, langsung jalankan fungsi <code>fetchDataDariDatabase()</code> secara otomatis (tanpa nunggu di-klik)."
+        </div>
+      </div>
+
+      <div class="card react">
+        <div class="card-header">
+          <div class="symbol">props</div>
+          <h2 class="title">Operan Barang (Properties)</h2>
+        </div>
+        <p>Cara sebuah komponen (induk) memberikan data ke komponen di bawahnya (anak).</p>
+        <div class="code-block">
+          // Di file Induk.js<br>
+          &lt;TombolCantik warna="merah" teks="Simpan" /&gt;
+        </div>
+        <div class="analogy">
+          <b>Analogi Ngasih Tugas:</b> Bos memanggil anak buahnya (TombolCantik) dan membawakan <i>props</i>: "Nih, kamu kerja ya, warnamu kubikin merah, dan teks di perutmu harus tulisan 'Simpan'". Si anak buah akan menerima dan memakainya.
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+</body>
+</html>

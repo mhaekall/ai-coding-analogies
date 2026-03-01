@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 20 Logika & Syntax Wajib</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --bg: #1c1917;
+      --surface: #292524;
+      --surface-elevated: #332f2c;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f5f5f4;
+      --text-dim: #a8a29e;
+      --accent: #ea580c;
+    }
+
+    body {
+      margin: 0; padding: 40px 20px;
+      font-family: var(--font-body);
+      background-color: var(--bg); color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+    
+    header { text-align: center; margin-bottom: 40px; }
+    h1 { font-size: 2.2rem; margin: 0 0 10px 0; }
+    .subtitle { color: var(--text-dim); }
+
+    table {
+      width: 100%; border-collapse: collapse;
+      background: var(--surface); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    th {
+      background: var(--surface-elevated); padding: 16px;
+      text-align: left; font-size: 0.9rem; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-dim);
+      border-bottom: 2px solid var(--border);
+    }
+
+    td {
+      padding: 16px; border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:hover { background: rgba(255,255,255,0.02); }
+    tr:last-child td { border-bottom: none; }
+
+    .syntax {
+      font-family: var(--font-mono); color: #38bdf8;
+      font-size: 1rem; font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .concept { font-weight: 600; font-size: 1.05rem; margin-bottom: 4px; }
+    .analogy { color: var(--text-dim); font-size: 0.95rem; }
+
+    .category-row td {
+      background: var(--surface-elevated); color: var(--accent);
+      font-weight: 700; text-align: center; letter-spacing: 2px;
+      text-transform: uppercase; font-size: 0.85rem; padding: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Top 20 Cheat Sheet "Bahasa" Mesin</h1>
+      <p class="subtitle">Ini adalah 20 kata kunci / simbol yang mencakup 90% dari keseluruhan kode Next.js/React buatan AI yang akan kamu temui.</p>
+    </header>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="15%">Syntax / Simbol</th>
+          <th width="35%">Apa namanya?</th>
+          <th width="50%">Analogi / Cara Membacanya</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- FASE 1 -->
+        <tr class="category-row"><td colspan="3">Fase 1: Komunikasi & Pengiriman (Backend)</td></tr>
+        <tr>
+          <td class="syntax">fetch()</td>
+          <td><div class="concept">Mengambil/Mengirim Data</div></td>
+          <td class="analogy">"Panggil kurir untuk pergi ke alamat tersebut."</td>
+        </tr>
+        <tr>
+          <td class="syntax">async / await</td>
+          <td><div class="concept">Menunggu Proses</div></td>
+          <td class="analogy">"Tolong diam dan tunggu sampai kurirnya selesai, baru lanjut ke baris bawahnya."</td>
+        </tr>
+        <tr>
+          <td class="syntax">JSON.stringify()</td>
+          <td><div class="concept">Membungkus Paket</div></td>
+          <td class="analogy">"Bungkus dan lakban kotak paket ini sebelum dikirim ke internet."</td>
+        </tr>
+        <tr>
+          <td class="syntax">JSON.parse()</td>
+          <td><div class="concept">Membuka Paket</div></td>
+          <td class="analogy">"Buka lakban paket yang baru datang biar isinya bisa kita pakai."</td>
+        </tr>
+        <tr>
+          <td class="syntax">try / catch</td>
+          <td><div class="concept">Jaring Pengaman Error</div></td>
+          <td class="analogy">"Coba lakuin ini (try). Kalau tiba-tiba meledak/error, tolong tangkap (catch) errornya biar aplikasinya nggak ikut mati total."</td>
+        </tr>
+
+        <!-- FASE 2 -->
+        <tr class="category-row"><td colspan="3">Fase 2: Jalan Pintas Si Malas (Shorthands)</td></tr>
+        <tr>
+          <td class="syntax">=></td>
+          <td><div class="concept">Arrow Function</div></td>
+          <td class="analogy">"Terima input di kiri panah, LALU proses menjadi apa yang di kanan panah."</td>
+        </tr>
+        <tr>
+          <td class="syntax">condition ? A : B</td>
+          <td><div class="concept">Ternary Operator (If/Else Singkat)</div></td>
+          <td class="analogy">"Apakah kondisinya benar (?) Kalau YA pilih A. Kalau TIDAK (:) pilih B."</td>
+        </tr>
+        <tr>
+          <td class="syntax">A && B</td>
+          <td><div class="concept">Logical AND (Hanya Jika)</div></td>
+          <td class="analogy">"Hanya Jika A benar, tolong kerjakan B. (Biasa dipakai nampilin loading spinner)."</td>
+        </tr>
+        <tr>
+          <td class="syntax">A || B</td>
+          <td><div class="concept">Logical OR (Alternatif)</div></td>
+          <td class="analogy">"Coba pakai A. Kalau A kosong/gagal, yaudah pakai B aja."</td>
+        </tr>
+        <tr>
+          <td class="syntax">data?.nama</td>
+          <td><div class="concept">Optional Chaining</div></td>
+          <td class="analogy">"Coba cari data 'nama'. Tapi kalau kardus 'data'-nya ternyata kosong, jangan error ya, diemin aja."</td>
+        </tr>
+
+        <!-- FASE 3 -->
+        <tr class="category-row"><td colspan="3">Fase 3: Membongkar & Menggandakan Data</td></tr>
+        <tr>
+          <td class="syntax">.map()</td>
+          <td><div class="concept">Mesin Fotokopi List</div></td>
+          <td class="analogy">"Ada 10 data? Tolong copy-paste cetakan HTML-nya 10 kali sesuai jumlah datanya."</td>
+        </tr>
+        <tr>
+          <td class="syntax">.filter()</td>
+          <td><div class="concept">Saringan Data</div></td>
+          <td class="analogy">"Pilih dan buang data yang nggak sesuai kriteria (misal: cuma tampilin item yang udah dibayar)."</td>
+        </tr>
+        <tr>
+          <td class="syntax">const { x } = y</td>
+          <td><div class="concept">Destructuring Object</div></td>
+          <td class="analogy">"Langsung ambil barang bernama 'x' dari dalam kardus besar 'y'."</td>
+        </tr>
+        <tr>
+          <td class="syntax">[...A, B]</td>
+          <td><div class="concept">Spread Operator</div></td>
+          <td class="analogy">"Tumpahkan isi keranjang A, lalu tambahkan barang B di sebelahnya."</td>
+        </tr>
+
+        <!-- FASE 4 -->
+        <tr class="category-row"><td colspan="3">Fase 4: Nyawa React / Next.js (The Hooks)</td></tr>
+        <tr>
+          <td class="syntax">useState()</td>
+          <td><div class="concept">Buku Catatan Memory</div></td>
+          <td class="analogy">"Bikin satu memori untuk nyatet perubahan (misal: status tombol dari Off jadi On)."</td>
+        </tr>
+        <tr>
+          <td class="syntax">useEffect()</td>
+          <td><div class="concept">Alarm / Efek Samping</div></td>
+          <td class="analogy">"Jalankan fungsi ini OTOMATIS saat halaman web pertama kali terbuka."</td>
+        </tr>
+        <tr>
+          <td class="syntax">props</td>
+          <td><div class="concept">Oper Barang ke Anak</div></td>
+          <td class="analogy">"Bos (halaman utama) nitip barang (warna, teks) ke anak buahnya (komponen tombol)."</td>
+        </tr>
+        <tr>
+          <td class="syntax">className=""</td>
+          <td><div class="concept">Penamaan Baju (CSS)</div></td>
+          <td class="analogy">"Pakaikan baju desain ini ke elemen HTML tersebut (Kalau di Next.js ini buat Tailwind CSS)."</td>
+        </tr>
+        <tr>
+          <td class="syntax">onClick={}</td>
+          <td><div class="concept">Tombol Trigger</div></td>
+          <td class="analogy">"Kalau kotak ini diklik pake mouse, tolong jalankan perintah di dalam kurung kurawal."</td>
+        </tr>
+        <tr>
+          <td class="syntax">onChange={}</td>
+          <td><div class="concept">Detektor Ketikan</div></td>
+          <td class="analogy">"Setiap kali user ngetik 1 huruf di kolom input, tolong tangkap hurufnya."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

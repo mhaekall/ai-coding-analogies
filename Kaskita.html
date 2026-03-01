@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>KasKita - Pencatat Keuangan Usaha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,1);
+            max-width: 400px;
+
+        }
+
+        table {
+            background-color: seashell;
+            padding: none;
+            border-radius: none;
+            box-shadow: 0px 4 px 6px rgba(0,0,0,1);
+            max-width: 400px;
+        }
+
+        button{
+            background-color: #27ae60;
+            color: whitesmoke;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>KasKita 💰</h1>
+    <p>Bantu usaha kecil catat keuangan dengan rapi.</p>
+    <h2 id="saldo-teks">Saldo Saat Ini: Rp 0</h2>
+    <hr>
+    <h3>Tambah Transaksi Baru</h3>
+    <form id="form-transaksi">
+        <label>Keterangan:</label>
+        <input type="text" id="input-keterangan" placeholder="Contoh: Beli Gula">
+        <br><br>
+        <label>Nominal (Rp):</label>
+        <input type="number" id="input-nominal" placeholder="15000">
+        <br><br>
+
+        <label>Jenis Transaksi:</label>
+        <select id="input-jenis">
+            <option value="Pemasukan">Pemasukan</option>
+            <option value="Pengeluaran">Pengeluaran</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Simpan Transaksi</button>
+    </form>
+
+    <hr>
+
+    <h3>Riwayat Transaksi</h3>
+    <table border="1" id="tabel-riwayat">
+        <tr>
+            <th>Keterangan</th>
+            <th>Jenis</th>
+            <th>Nominal</th>
+            <th>tanggal</th>
+        </tr>
+        <tr>
+            <td>Modal Awal Buka Warung</td>
+            <td>Pemasukan</td>
+            <td>Rp 100.000</td>
+            <td>30-06-26</td>
+        </tr>
+        <tr>
+            <td>Beli Plastik Kemasan</td>
+            <td>Pengeluaran</td>
+            <td>Rp 15.000</td>
+            <td>15-07-26</td>
+        </tr>
+    </table>
+<script>
+        // 1. SIAPKAN BUKU CATATAN (STATE) & CEK BRANKAS
+        // Kita ngecek: "Ada nggak data 'dataKasKita' di LocalStorage?"
+        // Kalau ada, unpack (parse). Kalau kosong, bikin buku catatan baru (array kosong []).
+        let daftarTransaksi = JSON.parse(localStorage.getItem("dataKasKita")) || [];
+
+        const form = document.getElementById("form-transaksi");
+        const teksSaldo = document.getElementById("saldo-teks");
+        const tabelRiwayat = document.getElementById("tabel-riwayat");
+
+        // 2. FUNGSI MENGGAMBAR ULANG LAYAR (RENDER)
+        // Ini adalah "jantung" dari React/Next.js. Layar digambar berdasarkan Data.
+        function perbaruiLayar() {
+            let totalSaldo = 0;
+            
+            // Bersihkan tabel dulu, sisakan judul kolomnya saja
+            tabelRiwayat.innerHTML = `
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Keterangan</th>
+                    <th>Jenis</th>
+                    <th>Nominal</th>
+                </tr>
+            `;
+
+            // Buka buku catatan, baca isinya satu per satu dari awal sampai akhir
+            for (let i = 0; i < daftarTransaksi.length; i++) {
+                let trx = daftarTransaksi[i];
+
+                // Hitung saldo
+                if (trx.jenis === "Pemasukan") {
+                    totalSaldo += trx.nominal;
+                } else {
+                    totalSaldo -= trx.nominal;
+                }
+
+                // Bikin HTML untuk baris ini, lalu tempel ke tabel
+                const barisBaru = `
+                    <tr>
+                        <td>${trx.tanggal}</td>
+                        <td>${trx.keterangan}</td>
+                        <td>${trx.jenis}</td>
+                        <td>Rp ${trx.nominal}</td>
+                    </tr>
+                `;
+                tabelRiwayat.innerHTML += barisBaru;
+            }
+
+            // Update tulisan saldo di layar
+            teksSaldo.innerHTML = "Saldo Saat Ini: Rp " + totalSaldo;
+        }
+
+        // 3. JALANKAN SEKALI SAAT WEB BARU DIBUKA
+        // Biar data yang udah ada di brankas langsung digambar di layar!
+        perbaruiLayar();
+
+        // 4. MANDOR FORMULIR (Saat tombol Simpan diklik)
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const waktuSekarang = new Date();
+            const tanggalHariIni = waktuSekarang.toLocaleDateString("id-ID", {
+                day: "numeric", month: "short", year: "numeric"
+            });
+
+            const inputKeterangan = document.getElementById("input-keterangan").value;
+            const inputNominal = parseInt(document.getElementById("input-nominal").value);
+            const inputJenis = document.getElementById("input-jenis").value;
+
+            // Bungkus data yang baru diketik ke dalam satu paket (Object)
+            const transaksiBaru = {
+                tanggal: tanggalHariIni,
+                keterangan: inputKeterangan,
+                nominal: inputNominal,
+                jenis: inputJenis
+            };
+
+            // Masukkan paket baru ini ke dalam Buku Catatan (Push)
+            daftarTransaksi.push(transaksiBaru);
+
+            // SIMPAN BUKU CATATAN KE DALAM BRANKAS LOCAL STORAGE! (Pake alat packing Stringify)
+            localStorage.setItem("dataKasKita", JSON.stringify(daftarTransaksi));
+
+            // Suruh fungsi nomor 2 menggambar ulang layar dengan data terbaru
+            perbaruiLayar();
+
+            // Bersihkan laci inputan
+            document.getElementById("input-keterangan").value = "";
+            document.getElementById("input-nominal").value = "";
+        });
+    </script>
+
+</body>
+</html>

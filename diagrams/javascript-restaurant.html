@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Web: Analogi Restoran</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+
+      /* Technical Blueprint Aesthetic (Light Mode First) */
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --border: rgba(15, 23, 42, 0.08);
+      --border-bright: rgba(15, 23, 42, 0.15);
+      --text: #0f172a;
+      --text-dim: #64748b;
+      
+      /* Teal & Slate Palette */
+      --accent: #0891b2;     /* Cyan */
+      --accent-dim: rgba(8, 145, 178, 0.08);
+      --node-a: #0284c7;     /* Light Blue (Client) */
+      --node-a-dim: rgba(2, 132, 199, 0.08);
+      --node-b: #0f766e;     /* Teal (Server) */
+      --node-b-dim: rgba(15, 118, 110, 0.08);
+      --node-c: #ca8a04;     /* Yellow (Database) */
+      --node-c-dim: rgba(202, 138, 4, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --surface-elevated: #334155;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-bright: rgba(255, 255, 255, 0.15);
+        --text: #f8fafc;
+        --text-dim: #94a3b8;
+        
+        --accent: #22d3ee;
+        --accent-dim: rgba(34, 211, 238, 0.15);
+        --node-a: #38bdf8;
+        --node-a-dim: rgba(56, 189, 248, 0.15);
+        --node-b: #2dd4bf;
+        --node-b-dim: rgba(45, 212, 191, 0.15);
+        --node-c: #facc15;
+        --node-c-dim: rgba(250, 204, 21, 0.15);
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: fadeUp 0.5s ease-out both;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Architecture Grid */
+    .arch-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Cards */
+    .ve-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: calc(var(--i, 0) * 0.1s);
+    }
+
+    .ve-card--hero {
+      background: color-mix(in srgb, var(--surface) 95%, var(--accent) 5%);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border-color: color-mix(in srgb, var(--border) 50%, var(--accent) 50%);
+    }
+
+    .ve-card--accent-a { border-left: 4px solid var(--node-a); }
+    .ve-card--accent-b { border-left: 4px solid var(--node-b); }
+    .ve-card--accent-c { border-left: 4px solid var(--node-c); }
+
+    .ve-card__label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ve-card--accent-a .ve-card__label { color: var(--node-a); }
+    .ve-card--accent-b .ve-card__label { color: var(--node-b); }
+    .ve-card--accent-c .ve-card__label { color: var(--node-c); }
+
+    .ve-card__label::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .ve-card__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.01em;
+    }
+
+    .ve-card__subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin: 0 0 16px 0;
+    }
+
+    .ve-card__desc {
+      font-size: 1.05rem;
+      color: var(--text);
+      margin: 0 0 16px 0;
+    }
+
+    /* Comparison / Two Columns */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .comparison > div {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .comparison h4 {
+      margin: 0 0 8px 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .comparison p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    /* Code Tags */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--accent-dim);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Arrows */
+    .flow-arrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 0;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: calc(var(--i, 0) * 0.1s);
+    }
+
+    .flow-arrow svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: var(--border-bright);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .comparison { grid-template-columns: 1fr; }
+      body { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Memahami "Sistem" Web App</h1>
+      <p class="subtitle">Dari HTML sederhana hingga Next.js, semua framework mengikuti prinsip yang sama: <b>Analogi Restoran</b>. Jika kamu paham alurnya, kamu bisa membuat perintah AI yang jauh lebih akurat.</p>
+    </header>
+
+    <div class="arch-grid">
+      
+      <!-- LAYER 1: FRONTEND -->
+      <div class="ve-card ve-card--hero ve-card--accent-a" style="--i: 1">
+        <div class="ve-card__label">Frontend / Client-Side</div>
+        <h2 class="ve-card__title">1. Ruang Makan (UI/UX)</h2>
+        <p class="ve-card__subtitle">Teknologi: HTML, CSS, React, Astro</p>
+        <p class="ve-card__desc">Ini adalah tempat pelanggan duduk, melihat menu, dan menekan tombol pesanan. Semua yang kamu lihat di layar HP (warna, tombol, animasi) ada di sini.</p>
+        
+        <div class="comparison">
+          <div>
+            <h4>Di Proyek "agecalc" (Sederhana)</h4>
+            <p>Hanya punya Ruang Makan. Koki-nya langsung masak di sebelah meja pelanggan pakai <code>script.js</code>.</p>
+          </div>
+          <div>
+            <h4>Di Proyek "Next.js" (Modern)</h4>
+            <p>Ruang Makan diurus oleh React. Tugasnya cuma nampilin data secepat mungkin, nggak mikirin hitungan berat.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow" style="--i: 2">
+        <svg viewBox="0 0 24 24"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+      </div>
+
+      <!-- LAYER 2: BACKEND -->
+      <div class="ve-card ve-card--accent-b" style="--i: 3">
+        <div class="ve-card__label">Backend / Server-Side / API</div>
+        <h2 class="ve-card__title">2. Dapur & Pelayan (Logic)</h2>
+        <p class="ve-card__subtitle">Teknologi: Node.js, Next.js API Routes, Python</p>
+        <p class="ve-card__desc">Pelanggan tidak boleh masuk dapur. Pelayan (API) membawa pesanan dari Ruang Makan ke Dapur (Server). Di sinilah "otak" berat bekerja, seperti mengecek password, atau mengirim pesan ke ChatGPT.</p>
+        
+        <div class="comparison">
+          <div>
+            <h4>Kenapa Butuh Dapur (Server)?</h4>
+            <p>Agar rahasia aman. Kamu tidak mungkin menaruh <b>API Key OpenAI</b> di Ruang Makan (Frontend), karena pelanggan bisa mencurinya!</p>
+          </div>
+          <div>
+            <h4>Keajaiban Next.js</h4>
+            <p>Next.js spesial karena dia menggabungkan <b>Ruang Makan + Dapur</b> dalam satu gedung (satu repository). Ini yang disebut <i>Fullstack</i>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow" style="--i: 4">
+        <svg viewBox="0 0 24 24"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+      </div>
+
+      <!-- LAYER 3: DATABASE -->
+      <div class="ve-card ve-card--accent-c" style="--i: 5">
+        <div class="ve-card__label">Database / Storage</div>
+        <h2 class="ve-card__title">3. Gudang Bahan Makanan</h2>
+        <p class="ve-card__subtitle">Teknologi: Supabase, MongoDB, Firebase</p>
+        <p class="ve-card__desc">Tempat menyimpan semua data secara permanen. Jika mati lampu (aplikasi direfresh), data di gudang tidak akan hilang.</p>
+        
+        <div class="comparison">
+          <div>
+            <h4>Contoh Penggunaan</h4>
+            <p>Menyimpan history obrolan chatbot, menyimpan data user yang mendaftar, atau menyimpan link untuk Link-in-bio.</p>
+          </div>
+          <div>
+            <h4>Alur Kerja Utuh</h4>
+            <p>Ruang Makan (UI) ➜ minta data ke Dapur (Server) ➜ Dapur ambil di Gudang (DB) ➜ Dapur masak ➜ Pelayan antar kembali ke Meja (UI).</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

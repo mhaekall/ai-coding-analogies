@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan Praktikal Fase 0: Anatomi Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Blueprint / Technical Theme */
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-elevated: #334155;
+      --border: rgba(148, 163, 184, 0.2);
+      --border-bright: rgba(56, 189, 248, 0.4);
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      
+      --accent-html: #38bdf8; /* cyan */
+      --accent-html-dim: rgba(56, 189, 248, 0.1);
+      
+      --accent-css: #c084fc; /* purple */
+      --accent-css-dim: rgba(192, 132, 252, 0.1);
+      
+      --accent-js: #fcd34d; /* yellow */
+      --accent-js-dim: rgba(252, 211, 77, 0.1);
+
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      min-height: 100vh;
+      background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      animation: fadeUp 0.6s ease-out forwards;
+    }
+
+    /* Header */
+    .header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      border-top: 4px solid var(--accent-html);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .header-eyebrow {
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    /* Analogy Box */
+    .analogy-banner {
+      display: flex;
+      gap: 1.5rem;
+      background: var(--surface-elevated);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-js);
+      margin-bottom: 2rem;
+    }
+
+    .analogy-banner h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    /* Grid for Exercises */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Section Cards */
+    .ve-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .badge.html { background: var(--accent-html-dim); color: var(--accent-html); border: 1px solid rgba(56,189,248,0.3); }
+    .badge.css { background: var(--accent-css-dim); color: var(--accent-css); border: 1px solid rgba(192,132,252,0.3); }
+    .badge.js { background: var(--accent-js-dim); color: var(--accent-js); border: 1px solid rgba(252,211,77,0.3); }
+
+    .ve-card h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .instruction {
+      margin-bottom: 1.5rem;
+      color: var(--text-dim);
+    }
+
+    .instruction strong {
+      color: var(--text);
+    }
+
+    /* Code Blocks */
+    .code-window {
+      background: #0b1120;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-header {
+      background: rgba(255,255,255,0.05);
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    pre {
+      padding: 1rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .tag-name { color: #f43f5e; } /* pink */
+    .attr { color: #10b981; } /* green */
+    .str { color: #fcd34d; } /* yellow */
+    .css-prop { color: #38bdf8; } /* cyan */
+    .css-val { color: #c084fc; } /* purple */
+    .js-kw { color: #c084fc; }
+    .js-func { color: #38bdf8; }
+
+    /* Action Checklist */
+    .checklist {
+      list-style: none;
+      background: rgba(0,0,0,0.2);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px dashed var(--border);
+    }
+
+    .checklist li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .checklist li::before {
+      content: '□';
+      position: absolute;
+      left: 0;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .checklist li:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <header class="header">
+    <div class="header-eyebrow">Modul Latihan Praktikal — Berdasarkan Buku Panduan</div>
+    <h1>Fase 0: Anatomi Web Dasar</h1>
+    <p style="color: var(--text-dim);">Sebelum merakit mesin canggih (Next.js), kita harus tahu cara memegang obeng dan palu. Latihan ini dirancang agar kamu "merasakan" kodenya, bukan sekadar menghafal teori.</p>
+  </header>
+
+  <div class="analogy-banner">
+    <div style="font-size: 2rem;">🏠</div>
+    <div>
+      <h3>Analogi Utama: Membangun Rumah</h3>
+      <p style="color: var(--text-dim); font-size: 0.95rem;">
+        Bayangkan kamu sedang membangun sebuah rumah. 
+        <br>• <strong style="color: var(--accent-html)">HTML</strong> adalah <b>Batu Bata & Tiang</b>. Ia membentuk ruang tamu, kamar, dan pintu. Tanpa ini, rumahnya tidak ada.
+        <br>• <strong style="color: var(--accent-css)">CSS</strong> adalah <b>Cat & Dekorasi interior</b>. Ia membuat rumahmu cantik, memberi warna pada dinding, dan menata letak sofa.
+        <br>• <strong style="color: var(--accent-js)">JavaScript</strong> adalah <b>Listrik & Saluran Air</b>. Ia membuat lampu bisa dinyalakan saat saklar ditekan, dan air mengalir saat keran dibuka.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- LATIHAN 1: HTML -->
+    <div class="ve-card">
+      <div class="card-title-row">
+        <span class="badge html">LATIHAN 1 : HTML</span>
+        <h2>Menyusun Batu Bata (Struktur)</h2>
+      </div>
+      
+      <p class="instruction">
+        Tugasmu: Buat kerangka dasar untuk halaman "Profil Diri". Jangan pikirkan warnanya dulu (pasti akan terlihat sangat jelek dan plain). Fokus pada <strong>makna/semantic</strong> kontennya.
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <span>index.html</span>
+          <span>Kerangka Dasar</span>
+        </div>
+        <pre><code>&lt;<span class="tag-name">h1</span>&gt;Budi Santoso&lt;/<span class="tag-name">h1</span>&gt;
+&lt;<span class="tag-name">p</span>&gt;Halo, saya calon AI Developer dari Indonesia.&lt;/<span class="tag-name">p</span>&gt;
+
+&lt;<span class="tag-name">h2</span>&gt;Keahlian Saya&lt;/<span class="tag-name">h2</span>&gt;
+&lt;<span class="tag-name">ul</span>&gt;
+  &lt;<span class="tag-name">li</span>&gt;Prompt Engineering&lt;/<span class="tag-name">li</span>&gt;
+  &lt;<span class="tag-name">li</span>&gt;Belajar AI Tools&lt;/<span class="tag-name">li</span>&gt;
+&lt;/<span class="tag-name">ul</span>&gt;
+
+&lt;<span class="tag-name">button</span> <span class="attr">id</span>=<span class="str">"btn-kontak"</span>&gt;Hubungi Saya&lt;/<span class="tag-name">button</span>&gt;</code></pre>
+      </div>
+
+      <ul class="checklist">
+        <li>Buka VS Code, buat file baru bernama <code>index.html</code></li>
+        <li>Ketik tanda seru <code>!</code> lalu tekan Tab. Ini akan otomatis membuat kerangka dasar HTML.</li>
+        <li>Copy kode di atas dan paste di dalam tag <code>&lt;body&gt;</code>.</li>
+        <li>Buka file tersebut di browser (Chrome/Edge). Cek apakah tampilannya muncul (teks hitam, latar putih).</li>
+      </ul>
+    </div>
+
+    <!-- LATIHAN 2: CSS -->
+    <div class="ve-card">
+      <div class="card-title-row">
+        <span class="badge css">LATIHAN 2 : CSS</span>
+        <h2>Mengecat Rumah (Styling)</h2>
+      </div>
+      
+      <p class="instruction">
+        Tampilan HTML standar sangat membosankan. Sekarang kita gunakan CSS untuk memberi "cat" dan merapikan letak "perabotan" (layout). Kita akan menggunakan konsep <strong>Flexbox</strong> (Bayangkan Flexbox seperti barisan kursi yang bisa merenggang atau merapat secara otomatis).
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <span>style.css</span>
+          <span>Penataan & Warna</span>
+        </div>
+        <pre><code><span class="cm">/* Targetkan seluruh isi rumah (body) */</span>
+<span class="tag-name">body</span> {
+  <span class="css-prop">background-color</span>: <span class="css-val">#1a1a1a</span>;
+  <span class="css-prop">color</span>: <span class="css-val">white</span>;
+  <span class="css-prop">font-family</span>: <span class="css-val">sans-serif</span>;
+  <span class="css-prop">text-align</span>: <span class="css-val">center</span>;
+  <span class="css-prop">padding-top</span>: <span class="css-val">50px</span>;
+}
+
+<span class="cm">/* Targetkan tombol spesifik */</span>
+<span class="tag-name">button</span> {
+  <span class="css-prop">background-color</span>: <span class="css-val">#3b82f6</span>; <span class="cm">/* Biru terang */</span>
+  <span class="css-prop">color</span>: <span class="css-val">white</span>;
+  <span class="css-prop">padding</span>: <span class="css-val">10px 20px</span>;
+  <span class="css-prop">border</span>: <span class="css-val">none</span>;
+  <span class="css-prop">border-radius</span>: <span class="css-val">8px</span>; <span class="cm">/* Ujung membulat */</span>
+  <span class="css-prop">cursor</span>: <span class="css-val">pointer</span>;
+}</code></pre>
+      </div>
+
+      <ul class="checklist">
+        <li>Buat file <code>style.css</code> di folder yang sama.</li>
+        <li>Sambungkan CSS ke HTML dengan menambahkan <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> di dalam tag <code>&lt;head&gt;</code> HTML-mu.</li>
+        <li>Paste kode CSS di atas ke file <code>style.css</code>.</li>
+        <li>Refresh browser. Lihat bagaimana "rumah" kamu sekarang punya warna dan tombol yang rapi!</li>
+      </ul>
+    </div>
+
+    <!-- LATIHAN 3: JAVASCRIPT -->
+    <div class="ve-card">
+      <div class="card-title-row">
+        <span class="badge js">LATIHAN 3 : JS</span>
+        <h2>Memasang Saklar Listrik (Interaksi)</h2>
+      </div>
+      
+      <p class="instruction">
+        Rumahmu sudah berdiri dan dicat, tapi kalau tombol ditekan, tidak terjadi apa-apa (karena listriknya belum dipasang). Kita akan gunakan JavaScript agar tombol tersebut bisa bereaksi saat ditekan.
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <span>script.js</span>
+          <span>Logika Interaksi</span>
+        </div>
+        <pre><code><span class="cm">// 1. Cari elemen tombolnya di dalam dokumen (DOM)</span>
+<span class="js-kw">const</span> tombol = <span class="tag-name">document</span>.<span class="js-func">getElementById</span>(<span class="str">'btn-kontak'</span>);
+
+<span class="cm">// 2. Beri "Telinga" (Listener) agar ia mendengar jika diklik</span>
+tombol.<span class="js-func">addEventListener</span>(<span class="str">'click'</span>, () <span class="js-kw">=></span> {
+  <span class="cm">// 3. Apa yang terjadi saat diklik?</span>
+  <span class="js-func">alert</span>(<span class="str">'Terima kasih! Saya akan segera menghubungi Anda.'</span>);
+  
+  <span class="cm">// Bonus: Ubah teks tombol secara dinamis</span>
+  tombol.<span class="js-func">innerText</span> = <span class="str">'Pesan Terkirim ✅'</span>;
+  tombol.<span class="js-func">style</span>.<span class="js-func">backgroundColor</span> = <span class="str">'#10b981'</span>; <span class="cm">// Berubah hijau</span>
+});</code></pre>
+      </div>
+
+      <ul class="checklist">
+        <li>Buat file <code>script.js</code> di folder yang sama.</li>
+        <li>Sambungkan ke HTML dengan menambahkan <code>&lt;script src="script.js"&gt;&lt;/script&gt;</code> tepat <strong>sebelum</strong> tag penutup <code>&lt;/body&gt;</code>.</li>
+        <li>Paste kode JS di atas.</li>
+        <li>Refresh browser. Klik tombol birunya, dan lihat "listrik" (interaksi) bekerja mengubah warna dan memunculkan pop-up!</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
