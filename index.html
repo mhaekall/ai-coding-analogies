@@ -3,86 +3,391 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kamus Coding & Visual Explainer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>AI Productivity Hacker | Kamus Coding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #faf7f5;
-      --surface: #ffffff;
-      --border: rgba(0, 0, 0, 0.08);
-      --text: #2d2a26;
-      --text-dim: #736d65;
-      --accent: #c2410c;
+      --bg: #000000;
+      --surface: rgba(28, 28, 30, 0.4);
+      --surface-hover: rgba(44, 44, 46, 0.6);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.15);
+      --text: #ffffff;
+      --text-dim: #98989d;
+      --accent: #0a84ff; /* iOS Blue */
+      --glow: rgba(10, 132, 255, 0.3);
     }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
     body {
-      margin: 0; padding: 40px 20px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg); color: var(--text);
-      line-height: 1.6; max-width: 800px; margin: auto;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
     }
-    h1 { font-size: 2.2rem; text-align: center; margin-bottom: 8px; }
-    p.subtitle { text-align: center; color: var(--text-dim); margin-bottom: 40px; }
-    
+
+    /* Ambient Background Blobs (Spatial Computing feel) */
+    .ambient-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .blob {
+      position: absolute;
+      filter: blur(80px);
+      opacity: 0.5;
+      border-radius: 50%;
+      animation: drift 20s infinite alternate ease-in-out;
+    }
+
+    .blob-1 {
+      top: -10%; left: -10%;
+      width: 50vw; height: 50vw;
+      background: radial-gradient(circle, #ff2a6d 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+
+    .blob-2 {
+      bottom: -20%; right: -10%;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, #05d5ff 0%, transparent 70%);
+      animation-delay: -5s;
+    }
+
+    .blob-3 {
+      top: 40%; left: 30%;
+      width: 40vw; height: 40vw;
+      background: radial-gradient(circle, #5500ff 0%, transparent 70%);
+      animation-delay: -10s;
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(10%, 5%) scale(1.1); }
+      66% { transform: translate(-5%, 15%) scale(0.9); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Profile */
+    .profile-header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeScale 0.8s ease-out forwards;
+    }
+
+    .avatar-glow {
+      width: 80px; height: 80px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #05d5ff, #5500ff);
+      padding: 3px;
+      box-shadow: 0 0 30px rgba(5, 213, 255, 0.4);
+    }
+
+    .avatar {
+      width: 100%; height: 100%;
+      background: #111;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      margin: 40px 0 16px 12px;
+      font-weight: 600;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+
+    /* Glassmorphism Cards */
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 20px; margin-bottom: 16px;
-      display: flex; flex-direction: column; gap: 8px;
-      text-decoration: none; color: inherit;
-      transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease-out forwards;
     }
-    .card:hover {
-      transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-      border-color: var(--accent);
-    }
-    .card h2 { margin: 0; font-size: 1.2rem; color: var(--accent); }
-    .card p { margin: 0; font-size: 0.95rem; color: var(--text-dim); }
+
+    /* Staggered animation */
+    .card:nth-child(1) { animation-delay: 0.3s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.5s; }
+    .card:nth-child(4) { animation-delay: 0.6s; }
+    .card:nth-child(5) { animation-delay: 0.7s; }
     
-    .section-title { margin-top: 40px; margin-bottom: 16px; font-size: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+    .exp-card:nth-child(1) { animation-delay: 0.8s; }
+    .exp-card:nth-child(2) { animation-delay: 0.9s; }
+
+    .card:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.05);
+    }
+
+    .card:active {
+      transform: scale(0.98);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .card-content {
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-arrow {
+      color: var(--text-dim);
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+      color: var(--text);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Dock at bottom */
+    .dock {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(28, 28, 30, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 8px 24px;
+      display: flex;
+      gap: 20px;
+      z-index: 100;
+      animation: fadeUp 0.8s ease-out forwards;
+      animation-delay: 1s;
+      opacity: 0;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .dock-item {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 8px;
+      transition: color 0.2s;
+    }
+
+    .dock-item:hover {
+      color: var(--text);
+    }
+
   </style>
 </head>
 <body>
-  <h1>AI Productivity Hacker</h1>
-  <p class="subtitle">Kumpulan Kamus Coding & Diagram Visual</p>
 
-  <h2 class="section-title">Kamus & Visual Explainer (Belajar Alur)</h2>
-  
-  <a href="diagrams/coding-analogies.html" class="card">
-    <h2>1. Fundamental Coding (Analogi Masakan)</h2>
-    <p>Penjelasan Variabel, Fungsi, dan Algoritma dengan analogi sehari-hari.</p>
-  </a>
-
-  <a href="diagrams/javascript-restaurant.html" class="card">
-    <h2>2. Arsitektur Next.js (Analogi Restoran)</h2>
-    <p>Memahami Frontend (Ruang Makan), Backend (Dapur), dan Database (Gudang).</p>
-  </a>
-
-  <a href="diagrams/syntax-cheat-sheet.html" class="card">
-    <h2>3. 3 Syntax Utama (Fetch, Async, Arrow)</h2>
-    <p>Cara cepat membaca bahasa mesin saat AI melakukan Fetch API.</p>
-  </a>
-
-  <a href="diagrams/kamus-syntax-lengkap.html" class="card">
-    <h2>4. Kamus Syntax Lengkap (Alien Syntax)</h2>
-    <p>Panduan lengkap simbol-simbol aneh di React/Next.js (useState, useEffect, dll).</p>
-  </a>
-
-  <a href="diagrams/top-20-syntax.html" class="card">
-    <h2>5. Top 20 Cheat Sheet Syntax</h2>
-    <p>20 Kata kunci yang mencakup 90% kode hasil generate AI.</p>
-  </a>
-
-  <h2 class="section-title">Eksperimen UI / Mini Tools</h2>
-  <a href="kalkulator-usia-ios.html" class="card">
-    <h2>Kalkulator Usia iOS Style</h2>
-    <p>Tampilan kalkulator umur bergaya iOS modern.</p>
-  </a>
-  <a href="Kaskita.html" class="card">
-    <h2>Kaskita HTML</h2>
-    <p>File eksperimen Kaskita.</p>
-  </a>
-
-  <div style="text-align: center; margin-top: 50px; font-size: 0.9rem; color: var(--text-dim);">
-    Dibuat untuk edukasi AI & Software Architecture.
+  <!-- Animated Ambient Background -->
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
+
+  <div class="container">
+    
+    <div class="profile-header">
+      <div class="avatar-glow">
+        <div class="avatar">👨‍💻</div>
+      </div>
+      <h1>AI Productivity Hacker</h1>
+      <p class="subtitle">Membangun sistem dengan AI tanpa pusing syntax.</p>
+    </div>
+
+    <h2 class="section-title">Visual Explainer</h2>
+    <div class="card-list">
+      
+      <a href="diagrams/coding-analogies.html" class="card">
+        <div class="card-icon">🍳</div>
+        <div class="card-content">
+          <div class="card-title">Fundamental Coding</div>
+          <div class="card-desc">Variabel, Fungsi & Algoritma menggunakan analogi dapur dan memasak.</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="diagrams/javascript-restaurant.html" class="card">
+        <div class="card-icon">🏢</div>
+        <div class="card-content">
+          <div class="card-title">Arsitektur Next.js</div>
+          <div class="card-desc">Pahami alur Frontend (Meja), Backend (Dapur), dan Database (Gudang).</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="diagrams/kamus-syntax-lengkap.html" class="card">
+        <div class="card-icon">👽</div>
+        <div class="card-content">
+          <div class="card-title">Kamus "Alien" Syntax</div>
+          <div class="card-desc">Terjemahan simbol aneh (&&, ?., .map) menjadi bahasa manusia.</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="diagrams/top-20-syntax.html" class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-content">
+          <div class="card-title">Top 20 Cheat Sheet</div>
+          <div class="card-desc">Daftar pendek 20 logika wajib yang mencakup 90% kode AI.</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="diagrams/syntax-cheat-sheet.html" class="card">
+        <div class="card-icon">🚀</div>
+        <div class="card-content">
+          <div class="card-title">Fetch & Async/Await</div>
+          <div class="card-desc">Bagaimana aplikasimu menyeberang internet mengambil data.</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+    </div>
+
+    <h2 class="section-title" style="animation-delay: 0.7s;">Eksperimen</h2>
+    <div class="card-list">
+      
+      <a href="kalkulator-usia-ios.html" class="card exp-card">
+        <div class="card-icon">📱</div>
+        <div class="card-content">
+          <div class="card-title">Kalkulator Usia iOS</div>
+          <div class="card-desc">Implementasi UI bergaya iOS dengan fungsi hitung umur.</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="Kaskita.html" class="card exp-card">
+        <div class="card-icon">🎨</div>
+        <div class="card-content">
+          <div class="card-title">Kaskita Web</div>
+          <div class="card-desc">Eksperimen tampilan web interaktif.</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="dock">
+    <a href="https://github.com/mhaekall/ai-coding-analogies" target="_blank" class="dock-item">GitHub</a>
+    <a href="#" class="dock-item">Share</a>
+  </div>
+
 </body>
 </html>
