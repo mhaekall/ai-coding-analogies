@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamus Coding & Visual Explainer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf7f5;
+      --surface: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #2d2a26;
+      --text-dim: #736d65;
+      --accent: #c2410c;
+    }
+    body {
+      margin: 0; padding: 40px 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg); color: var(--text);
+      line-height: 1.6; max-width: 800px; margin: auto;
+    }
+    h1 { font-size: 2.2rem; text-align: center; margin-bottom: 8px; }
+    p.subtitle { text-align: center; color: var(--text-dim); margin-bottom: 40px; }
+    
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; margin-bottom: 16px;
+      display: flex; flex-direction: column; gap: 8px;
+      text-decoration: none; color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      border-color: var(--accent);
+    }
+    .card h2 { margin: 0; font-size: 1.2rem; color: var(--accent); }
+    .card p { margin: 0; font-size: 0.95rem; color: var(--text-dim); }
+    
+    .section-title { margin-top: 40px; margin-bottom: 16px; font-size: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>AI Productivity Hacker</h1>
+  <p class="subtitle">Kumpulan Kamus Coding & Diagram Visual</p>
+
+  <h2 class="section-title">Kamus & Visual Explainer (Belajar Alur)</h2>
+  
+  <a href="diagrams/coding-analogies.html" class="card">
+    <h2>1. Fundamental Coding (Analogi Masakan)</h2>
+    <p>Penjelasan Variabel, Fungsi, dan Algoritma dengan analogi sehari-hari.</p>
+  </a>
+
+  <a href="diagrams/javascript-restaurant.html" class="card">
+    <h2>2. Arsitektur Next.js (Analogi Restoran)</h2>
+    <p>Memahami Frontend (Ruang Makan), Backend (Dapur), dan Database (Gudang).</p>
+  </a>
+
+  <a href="diagrams/syntax-cheat-sheet.html" class="card">
+    <h2>3. 3 Syntax Utama (Fetch, Async, Arrow)</h2>
+    <p>Cara cepat membaca bahasa mesin saat AI melakukan Fetch API.</p>
+  </a>
+
+  <a href="diagrams/kamus-syntax-lengkap.html" class="card">
+    <h2>4. Kamus Syntax Lengkap (Alien Syntax)</h2>
+    <p>Panduan lengkap simbol-simbol aneh di React/Next.js (useState, useEffect, dll).</p>
+  </a>
+
+  <a href="diagrams/top-20-syntax.html" class="card">
+    <h2>5. Top 20 Cheat Sheet Syntax</h2>
+    <p>20 Kata kunci yang mencakup 90% kode hasil generate AI.</p>
+  </a>
+
+  <h2 class="section-title">Eksperimen UI / Mini Tools</h2>
+  <a href="kalkulator-usia-ios.html" class="card">
+    <h2>Kalkulator Usia iOS Style</h2>
+    <p>Tampilan kalkulator umur bergaya iOS modern.</p>
+  </a>
+  <a href="Kaskita.html" class="card">
+    <h2>Kaskita HTML</h2>
+    <p>File eksperimen Kaskita.</p>
+  </a>
+
+  <div style="text-align: center; margin-top: 50px; font-size: 0.9rem; color: var(--text-dim);">
+    Dibuat untuk edukasi AI & Software Architecture.
+  </div>
+</body>
+</html>
